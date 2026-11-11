@@ -20,15 +20,12 @@ body.dark .sidebar { background: linear-gradient(180deg, #0f0f0fe0, #0f0f0fb3); 
 body.dark .sidebar::after { display: none; }
 body:not(.dark) .sidebar { background: #f5f5f5c2; }
 
-/* Frost the shared workspace backdrop while keeping its controls and charts sharp. */
-.workspace > main {
-  -webkit-backdrop-filter: blur(3.84px);
-  backdrop-filter: blur(3.84px);
-}
+/* Keep the terrain in the shell and give the working surface a solid color. */
+.workspace > main { background: var(--bg); }
+body.dark .workspace > main { background: #1e1e1e; }
 
 body.dark :is(.panel, .metrics .metric:not(:first-child)) { background: #252525ad; }
 body:not(.dark) :is(.panel, .metrics .metric:not(:first-child)) { background: #f4f4f4b8; }
-.dash-panel, .summarygrid .panel { backdrop-filter: blur(.55px); }
 
 @media (max-width: 560px) {
   body::before { background-size: 660px 660px; }
