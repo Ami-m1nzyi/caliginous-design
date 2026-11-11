@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark light"><meta name="description" content="Caliginous — интерактивное дизайн-демо сервиса обратной связи сотрудников."><title>Caliginous — обратная связь сотрудников</title><link rel="icon" href="mark.svg" type="image/svg+xml"><link rel="stylesheet" href="prototype.css"><link rel="stylesheet" href="moodboard.css"><link rel="stylesheet" href="dashboard.css"><link rel="stylesheet" href="release.css"></head>
+<body class="dark">
+<a class="skip" href="#main">Перейти к содержимому</a>
+<div class="prototype-bar"><span><b>CALIGINOUS</b></span><span>Демо · вымышленные данные</span></div>
+<div class="app"><aside class="sidebar">
+<a class="brand" href="#queue" id="brand"><img src="mark.svg" alt="" width="32" height="32"><span>Caliginous<small>Обратная связь</small></span></a>
+<p class="navlabel">Рабочее пространство</p><nav id="nav" aria-label="Основное меню"></nav>
+<div class="side-note" hidden></div>
+<div class="asidebottom"><span class="avatar" aria-hidden="true">М</span><span><b id="roleName">Руководитель</b><small>Демонстрация роли</small></span></div></aside>
+<div class="workspace"><header class="app-header"><div class="breadcrumb"><span>Обратная связь</span><span aria-hidden="true">/</span><strong id="crumb">Очередь</strong></div><div class="header-controls"><label for="role">Демо-роль<select id="role"><option value="manager">Руководитель</option><option value="employee">Сотрудник</option><option value="admin">Администратор</option></select></label><label for="theme">Тема<select id="theme"><option value="dark">Тёмная</option><option value="light">Светлая</option></select></label></div></header>
+<main id="main" tabindex="-1"></main>
+<footer><span>Демо сохраняет изменения в этой вкладке</span><details class="view-tools"><summary>Настройки демо</summary><div><label for="state">Состояние интерфейса<select id="state"><option value="ready">Обычное</option><option value="loading">Загрузка</option><option value="empty">Пусто</option><option value="error">Ошибка</option><option value="partial">Частичные данные</option><option value="permission">Нет доступа</option></select></label><button id="reset" class="btn">Восстановить примеры</button></div></details></footer></div></div>
+<div class="sr-only" id="announcement" role="status" aria-live="polite"></div>
+<dialog id="action-dialog" aria-labelledby="dialog-title"><div class="dialog-head"><h2 id="dialog-title"></h2><button type="button" class="icon-button" id="close-dialog" aria-label="Закрыть диалог">×</button></div><div id="dialog-body"></div></dialog>
+<script src="data.js"></script><script src="workspace.js"></script><script src="dashboard.js"></script><script src="prototype.js"></script></body></html>

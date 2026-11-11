@@ -1,0 +1,35 @@
+.brand img { flex: none; }
+.navlink { min-width: 0; gap: 8px; }
+.navlink svg { flex: none; }
+.navlink > span:first-of-type { flex: 1; }
+.nav-count {
+  min-width: 20px;
+  padding: 1px 5px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  text-align: center;
+  font: 11px/1.45 Consolas, monospace;
+}
+.inbox-list { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; max-width: 840px; }
+.inbox-item { display: grid; grid-template-columns: 14px minmax(0, 1fr) 18px; gap: 14px; padding: 18px; align-items: start; }
+.inbox-item:hover { border-color: var(--strong); box-shadow: inset 0 0 0 1px var(--strong); }
+.inbox-mark { font-size: 11px; margin-top: 4px; }
+.inbox-content { display: grid; gap: 5px; overflow-wrap: anywhere; }
+.inbox-title { font-weight: 650; }
+.inbox-title small { font-weight: 400; margin-left: 9px; color: var(--muted); }
+.inbox-copy { font-size: 14px; }
+.about-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.about-card { padding: 22px; }
+.about-card p { color: var(--muted); font-size: 14px; }
+.about-note { margin-top: 20px; }
+@media (max-width: 800px) {
+  .brand img { width: 26px; height: 26px; }
+  .sidebar nav { flex-wrap: wrap; }
+  .about-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .sidebar nav { gap: 2px 4px; }
+  .navlink { padding-inline: 9px; }
+  .inbox-item { gap: 9px; padding: 15px; }
+  .about-grid { grid-template-columns: 1fr; }
+}
