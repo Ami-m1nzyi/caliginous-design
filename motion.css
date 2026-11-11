@@ -22,8 +22,8 @@ body:not(.dark) .sidebar { background: #f5f5f5c2; }
 
 /* Frost the shared workspace backdrop while keeping its controls and charts sharp. */
 .workspace > main {
-  -webkit-backdrop-filter: blur(3.24px);
-  backdrop-filter: blur(3.24px);
+  -webkit-backdrop-filter: blur(3.84px);
+  backdrop-filter: blur(3.84px);
 }
 
 body.dark :is(.panel, .metrics .metric:not(:first-child)) { background: #252525ad; }
