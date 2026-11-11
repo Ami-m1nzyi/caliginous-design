@@ -1,29 +1,31 @@
-/* The contour mask is independent of the panel tint and stays still on scroll. */
+/* Draw the contour artwork directly so it also renders when the demo is opened as a local file. */
 body { isolation: isolate; }
 
-@supports (mask-image: url('terrain.svg')) {
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background: #4d4d4d52;
-    mask: url('terrain.svg') 42% 30% / 920px 920px repeat;
-  }
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: url('terrain.svg') 42% 30% / 940px 940px repeat;
+  opacity: .34;
+  filter: brightness(0);
+}
 
-  body.dark::before { background: #bcbcbc5c; }
-  body.dark .app { background: #0f0f0f30; }
-  body.dark .workspace { background: linear-gradient(135deg, #0f0f0f26, #19191960 78%, #0f0f0f38); }
-  body:not(.dark) .app { background: #dedede65; }
+body.dark::before { opacity: .54; filter: none; }
+body.dark .app { background: #0f0f0f26; }
+body.dark .workspace { background: linear-gradient(135deg, #0f0f0f1c, #19191945 78%, #0f0f0f28); }
+body:not(.dark) .app { background: #dedede45; }
+body.dark .sidebar { background: linear-gradient(180deg, #0f0f0fe0, #0f0f0fb3); }
+body.dark .sidebar::after { display: none; }
+body:not(.dark) .sidebar { background: #f5f5f5c2; }
 
-  body.dark .panel { background: #2b2b2bd1; }
-  body:not(.dark) .panel { background: #f4f4f4d4; }
-  .dash-panel, .summarygrid .panel { backdrop-filter: blur(1px); }
+body.dark :is(.panel, .metrics .metric:not(:first-child)) { background: #252525ad; }
+body:not(.dark) :is(.panel, .metrics .metric:not(:first-child)) { background: #f4f4f4b8; }
+.dash-panel, .summarygrid .panel { backdrop-filter: blur(.55px); }
 
-  @media (max-width: 560px) {
-    body::before { mask-size: 670px 670px; }
-  }
+@media (max-width: 560px) {
+  body::before { background-size: 660px 660px; }
 }
 
 .view-tools .motion-toggle { margin-top: 9px; }
