@@ -1,0 +1,65 @@
+/* The contour mask is independent of the panel tint and stays still on scroll. */
+body { isolation: isolate; }
+
+@supports (mask-image: url('terrain.svg')) {
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: #4d4d4d52;
+    mask: url('terrain.svg') 42% 30% / 920px 920px repeat;
+  }
+
+  body.dark::before { background: #bcbcbc5c; }
+  body.dark .app { background: #0f0f0f30; }
+  body.dark .workspace { background: linear-gradient(135deg, #0f0f0f26, #19191960 78%, #0f0f0f38); }
+  body:not(.dark) .app { background: #dedede65; }
+
+  body.dark .panel { background: #2b2b2bd1; }
+  body:not(.dark) .panel { background: #f4f4f4d4; }
+  .dash-panel, .summarygrid .panel { backdrop-filter: blur(1px); }
+
+  @media (max-width: 560px) {
+    body::before { mask-size: 670px 670px; }
+  }
+}
+
+.view-tools .motion-toggle { margin-top: 9px; }
+.view-tools #motion-hint { margin: 0; }
+.dial-orbit { transform-box: view-box; transform-origin: 50% 50%; }
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-motion='on'] .dial-orbit {
+    animation: orbit-dial 72s linear infinite paused;
+  }
+
+  [data-motion='on'] .dial-visible .dial-orbit { animation-play-state: running; }
+  [data-motion='on'] .motion-enter .dial-progress { animation: fill-dial 800ms cubic-bezier(.2,.72,.2,1) both; }
+  [data-motion='on'] :is(.metrics, .panel, .activity).motion-enter:not(:focus-within) {
+    animation: enter-panel 420ms cubic-bezier(.2,.72,.2,1) both;
+  }
+
+  [data-motion='on'] :is(.dash-distribution li, .barrow).motion-enter :is(.dash-track, .bar) i {
+    transform-origin: left center;
+    animation: fill-scale 720ms cubic-bezier(.2,.72,.2,1) var(--scale-delay, 0ms) both;
+  }
+
+  :is(.dash-distribution li, .barrow):nth-child(2) { --scale-delay: 45ms; }
+  :is(.dash-distribution li, .barrow):nth-child(3) { --scale-delay: 90ms; }
+  :is(.dash-distribution li, .barrow):nth-child(4) { --scale-delay: 135ms; }
+  :is(.dash-distribution li, .barrow):nth-child(5) { --scale-delay: 180ms; }
+  :is(.dash-distribution li, .barrow):nth-child(n+6) { --scale-delay: 225ms; }
+  [data-motion='on'] .dash-plot.motion-enter .dash-series { animation: reveal-series 850ms cubic-bezier(.2,.72,.2,1) both; }
+
+  [data-motion='on'] :is(.btn, .row, .navlink, .myitem, .inbox-item) {
+    transition: background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+  }
+
+  @keyframes orbit-dial { to { transform: rotate(1turn); } }
+  @keyframes fill-dial { from { stroke-dasharray: 0 100; } }
+  @keyframes enter-panel { from { opacity: .77; transform: translateY(9px); } }
+  @keyframes fill-scale { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  @keyframes reveal-series { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0); } }
+}

@@ -60,24 +60,31 @@ function nav(){
   const showSignal = (mode === 'ready' || mode === 'partial') && visibleItems.length > 0;
   sideNote.hidden = !showSignal;
   if (!showSignal) {
+    delete sideNote.dataset.snapshot;
     sideNote.replaceChildren();
     return;
   }
-  const closed = visibleItems.filter(x => terminal.includes(x.status)).length;
+  const outcomes = visibleItems.map(item => terminal.includes(item.status));
+  const snapshot = `${role}:${outcomes.map(Number).join('')}`;
+  if (sideNote.dataset.snapshot === snapshot) return;
+  sideNote.dataset.snapshot = snapshot;
+  const closed = outcomes.filter(Boolean).length;
   const percent = closed / visibleItems.length * 100;
   const scope = role === 'employee' ? 'МОИ ОБРАЩЕНИЯ' : 'СОСТОЯНИЕ ОБРАЩЕНИЙ';
   sideNote.innerHTML = `<span class="signal-label">${scope}</span>
     <div class="signal-dial">
       <svg viewBox="0 0 160 160" aria-hidden="true">
-        <circle class="dial-outer" cx="80" cy="80" r="66"/>
+        <g class="dial-orbit">
+          <circle class="dial-outer" cx="80" cy="80" r="66"/>
+          <path class="dial-cross" d="M80 8v12m0 120v12M8 80h12m120 0h12"/>
+        </g>
         <circle class="dial-track" cx="80" cy="80" r="54"/>
         <circle class="dial-progress" cx="80" cy="80" r="54" pathLength="100" stroke-dasharray="${percent} 100" transform="rotate(-90 80 80)"/>
-        <path class="dial-cross" d="M80 8v12m0 120v12M8 80h12m120 0h12"/>
       </svg>
       <div><strong>${Math.round(percent)}<small>%</small></strong><span>с итогом</span></div>
     </div>
     <p>${closed} из ${visibleItems.length} · Синтетические данные</p>
-    <div class="signal-pixels" aria-hidden="true">${visibleItems.map(x => `<i class="${terminal.includes(x.status) ? 'done' : ''}"></i>`).join('')}</div>
+    <div class="signal-pixels" aria-hidden="true">${outcomes.map(done => `<i class="${done ? 'done' : ''}"></i>`).join('')}</div>
     <p class="signal-caption">Каждая точка — обращение.<br>Светлая — итог зафиксирован.</p>`;
 }
 function blockedState(route){
@@ -170,6 +177,7 @@ function render(focus=false){
   if (route === 'dashboard' && !blocked) bindDashboard();
   if (route === 'inbox' && !blocked) bindInbox();
   if(focus){$('#main').focus({preventScroll:true});window.scrollTo(0,0);}
+  observeMotion();
 }
 function resetFilters(){quick='all';search='';cat='';status='';dept='';dueAfter='';dueBefore='';render();announce('Фильтры сброшены.');}
 function currentItem(){return items.find(x=>x.id===current().id);}
@@ -255,4 +263,5 @@ $('.skip').onclick=e=>{e.preventDefault();$('#main').focus();};
 $('#action-dialog').addEventListener('close',()=>{if(returnFocus?.isConnected)returnFocus.focus();});
 window.addEventListener('hashchange',()=>render(true));
 if(location.hash==='#main')location.hash='#'+home();
+initMotion();
 render();

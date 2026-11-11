@@ -14,7 +14,7 @@ function readSession() {
 function saveSession() {
   try {
     sessionStorage.setItem(sessionKey, JSON.stringify({
-      items, role, draft, lastCreated, seen: [...seenNotifications], theme: $('#theme').value,
+      items, role, draft, lastCreated, seen: [...seenNotifications], theme: $('#theme').value, motionEnabled,
     }));
   } catch {
     // The demo still works in memory if storage is restricted or full.

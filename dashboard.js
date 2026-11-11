@@ -42,9 +42,11 @@ function dashboardTrendPanel(days) {
     <div class="dash-legend"><span><i></i> Подано · ${created}</span><span><i></i> Завершено · ${closed}</span></div>
     <svg class="dash-plot" viewBox="0 0 610 152" aria-hidden="true" focusable="false">
       ${ticks.map(tick => `<line x1="${plot.left}" x2="${plot.right}" y1="${y(tick)}" y2="${y(tick)}"/><text x="22" y="${y(tick)}" dominant-baseline="middle" text-anchor="end">${tick}</text>`).join('')}
-      <polygon points="${plot.left},${plot.bottom} ${points('created')} ${plot.right},${plot.bottom}"/>
-      <polyline points="${points('created')}"/>
-      <polyline class="dash-closed-line" points="${points('closed')}"/>
+      <g class="dash-series">
+        <polygon points="${plot.left},${plot.bottom} ${points('created')} ${plot.right},${plot.bottom}"/>
+        <polyline points="${points('created')}"/>
+        <polyline class="dash-closed-line" points="${points('closed')}"/>
+      </g>
     </svg>
     <div class="dash-plot-dates" aria-hidden="true"><span>${days[0].label}</span><span>${days[6].label}</span><span>${days.at(-1).label}</span></div>
     ${created + closed === 0 ? '<p class="hint dash-no-trend">За этот период обращений не подано и не завершено.</p>' : ''}
